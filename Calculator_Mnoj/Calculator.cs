@@ -18,7 +18,7 @@ namespace Calculator_Mnoj
             Display();
             Event ev;
             bool isUniversum;
-            Program.ColorDisplay("Задайте универсум с помощью команд ai -s U (для автоматического заполнения) или hi -s U (для ручного заполнения)", ConsoleColor.Green);
+            Program.ColorDisplay("Задайте универсум с помощью команд 6 -n U (для ручного заполнения) или 7 -n U (для автоматического заполнения)", ConsoleColor.Green);
             do
             {
                 Console.Write("\nВаш выбор: ");
@@ -169,14 +169,14 @@ namespace Calculator_Mnoj
             Console.WriteLine($"\nМаксимум сохранённых множеств: {MAX_SETS_COUNT}" +
                 $"\nМаксимум чисел в множестве: {MAX_NUM_COUNT}\n" +
                 "\nДоступные команды:\n" +
-                "1. Объединение\t\tФормат: un -l (имя левого операнда) -r (имя правого операнда) -s (имя для сохранения результата)\n" +
-                "2. Пересечение\t\tФормат: is -l (имя левого операнда -r (имя правого операнда) -s (имя для сохранения результата)\n" +
-                "3. Разность\t\tФормат: df -l (имя левого операнда) -r (имя правого операнда) -s (имя для сохранения результата)\n" +
-                "4. Симм. разность\tФормат: sd -l (имя левого операнда) -r (имя правого операнда) -s (имя для сохранения результата)\n" +
-                "5. Подмножество\t\tФормат: sb -l (имя левого операнда) -r (имя правого операнда)\n" +
-                "6. Ручной ввод\t\tФормат: hi -s (имя для сохранения результата)\n" +
-                "7. Автоматический ввод\tФормат: ai -s (имя для сохранения результата)\n" +
-                "8. Удаление\t\tФормат: dt -d (имя удаляемого множества)\n");
+                "1. Объединение\t\tФормат: 1 -l (имя левого операнда) -r (имя правого операнда) -n (имя для сохранения результата)\n" +
+                "2. Пересечение\t\tФормат: 2 -l (имя левого операнда -r (имя правого операнда) -n (имя для сохранения результата)\n" +
+                "3. Разность\t\tФормат: 3 -l (имя левого операнда) -r (имя правого операнда) -n (имя для сохранения результата)\n" +
+                "4. Симм. разность\tФормат: 4 -l (имя левого операнда) -r (имя правого операнда) -n (имя для сохранения результата)\n" +
+                "5. Подмножество\t\tФормат: 5 -l (имя левого операнда) -r (имя правого операнда)\n" +
+                "6. Ручной ввод\t\tФормат: 6 -n (имя для сохранения результата)\n" +
+                "7. Автоматический ввод\tФормат: 7 -n (имя для сохранения результата)\n" +
+                "8. Удаление\t\tФормат: 8 -d (имя удаляемого множества)\n");
             Program.ColorDisplay("Сохранённые множества:\n", ConsoleColor.DarkYellow);
             for (int i = 0; i < Operations.Count; i++)
             {
@@ -247,30 +247,30 @@ namespace Calculator_Mnoj
             if (command.Length >= 3)
             {
                 // Распознавание команды
-                switch (command.Substring(0, 2))
+                switch (command.Substring(0, 1))
                 {
-                    case "un":
+                    case "1":
                         ev.operation = evOperation.op_union;
                         break;
-                    case "is":
+                    case "2":
                         ev.operation = evOperation.op_intersect;
                         break;
-                    case "df":
+                    case "3":
                         ev.operation = evOperation.op_diff;
                         break;
-                    case "sd":
+                    case "4":
                         ev.operation = evOperation.op_symmetric_diff;
                         break;
-                    case "sb":
+                    case "5":
                         ev.operation = evOperation.op_subset_of;
                         break;
-                    case "hi":
+                    case "6":
                         ev.operation = evOperation.op_hand_input;
                         break;
-                    case "ai":
+                    case "7":
                         ev.operation = evOperation.op_auto_input;
                         break;
-                    case "dt":
+                    case "8":
                         ev.operation = evOperation.op_delete;
                         break;
                     default:
@@ -281,9 +281,9 @@ namespace Calculator_Mnoj
                 {
                     getR(command, ev);
                     getL(command, ev);
-                    if (getArg(command, "-s") != NOVALUE)
+                    if (getArg(command, "-n") != NOVALUE)
                     {
-                        getS(command, ev);
+                        getN(command, ev);
                     }
                 }
                 else if ((int)ev.operation == 4)
@@ -293,7 +293,7 @@ namespace Calculator_Mnoj
                 }
                 else if ((int)ev.operation >= 5 && (int)ev.operation <= 6)
                 {
-                    getS(command, ev);
+                    getN(command, ev);
                 }
                 else if ((int)ev.operation == 7)
                 {
@@ -330,9 +330,9 @@ namespace Calculator_Mnoj
                 ev.operation = evOperation.op_error;
             }
         }
-        private void getS(string command, Event ev)
+        private void getN(string command, Event ev)
         {
-            char s_name = getArg(command, "-s");
+            char s_name = getArg(command, "-n");
             if (isCapitalLetter(s_name) && Operations.Find((Operation s) => s.Name == s_name) == null)
             {
                 ev.resName = s_name;

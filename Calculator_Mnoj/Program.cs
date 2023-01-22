@@ -30,7 +30,7 @@ namespace Calculator_Mnoj
                 isCorrect = int.TryParse(Console.ReadLine(), out result) && condition(result);
                 if (!isCorrect)
                 {
-                    ColorDisplay("Неправильный формат вводимых данных, повторите ввод =>\n", ConsoleColor.Red);
+                    ColorDisplay("Неправильный формат вводимых данных, повторите ввод\n", ConsoleColor.Red);
                 }
             } while (!isCorrect);
             return result;

@@ -141,7 +141,7 @@ namespace Calculator_Mnoj
             }
             else
             {
-                return Name + ": Nothing";
+                return Name + ": Пусто";
             }
         }
     }
